@@ -29,3 +29,5 @@ $app->post('/login', 'AirCrash\Controllers\LoginController::onSubmitForm');
 
 $app->get('/user', 'AirCrash\Controllers\UserAccountController::showProfile')
 ->bind('userContact');
+
+$app->post('/user', 'AirCrash\Controllers\UserAccountController::editProfile'); 

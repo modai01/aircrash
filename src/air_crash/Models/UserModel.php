@@ -30,6 +30,27 @@ class UserModel
     		$id
     	);
 
+    }
 
+    public function editUserAccount($data){
+
+    	$oBdd = new Connect();
+    	$oBdd->executeSql(
+	    	'UPDATE `user` 
+	    	SET `lastLoginTimestamp`=NOW(),
+	    		`creationTimestamp`=NOW(),
+	    		`firstname`=?,
+	    		`lastname`=?,
+	    		`birthDate`=?,
+	    		`email`=?,
+	    		`password`=?,
+	    		`address`=?,
+	    		`city`=?,
+	    		`country`=?,
+	    		`zipCode`=?,
+	    		`phone`=? 
+	    	WHERE id=?',
+	    	$data
+    	);
     }
 }
