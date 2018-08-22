@@ -7,18 +7,29 @@ use Silex\Application;
 
 
 class UserModel
-{
-
+{	
 
     public function signIn($sEmail, $sPassword)
     {
         $oBdd = new Connect();
-        
-        $aUser = $oBdd->queryOne(
-            'SELECT `Id`, `FirstName`, `LastName`, `Password`, `Email` 
-                FROM User WHERE Email=?', [$sEmail]
+        // @todo revoir cette requete si hashage !
+        return $oBdd->queryOne(
+            'SELECT `id`, `firstname`, `lastname`, `password`, `email` 
+                FROM user WHERE email=? AND password=?', 
+                [$sEmail, $sPassword]
         );
-        
-        return false;
+    }
+    // requête Sql pour récupérer les infos user
+    public function getProfile($id){
+
+    	$oBdd = new Connect();
+    	return $oBdd -> queryOne(
+    		'SELECT *
+    		FROM user
+    		WHERE id=?',
+    		$id
+    	);
+
+
     }
 }

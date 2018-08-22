@@ -21,14 +21,22 @@ class LoginController
 		if( !empty($request->get('email')) && !empty($request->get('password')))
 		{
             $oUser = new Models\UserModel();
-            $aUser = $oUser->signIn($request->get('email'), $request->get('password'));
+            $aUser = $oUser->signIn(
+                $request->get('email'), 
+                $request->get('password')
+            );
 
             if($aUser != false) {
-                $oUserSession = new UserSession();
-                $oUserSession->create($aUser['Id'],$aUser['firstname'],$aUser['lastname'],$aUser['email']);
-                $http->redirectTo('/');
+                $oUserSession = new Models\UserSession();
+                $oUserSession->create(
+                    $aUser['id'],
+                    $aUser['firstname'],
+                    $aUser['lastname'],
+                    $aUser['email']
+                );
+             
+               return $app->redirect($app['url_generator']->generate('home'));
             } 
-
     	}
 
     	return $app['twig']->render('login.twig');

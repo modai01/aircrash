@@ -26,3 +26,6 @@ $app->get('/login', 'AirCrash\Controllers\LoginController::showForm')
 ->bind('login');
 
 $app->post('/login', 'AirCrash\Controllers\LoginController::onSubmitForm');
+
+$app->get('/user', 'AirCrash\Controllers\UserAccountController::showProfile')
+->bind('userContact');
