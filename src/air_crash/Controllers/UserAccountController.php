@@ -9,7 +9,7 @@ class UserAccountController{
 
 	public function showProfile(Application $app){
 		
-		$oUsersSession = new Models\UserSession;
+		$oUsersSession = new Models\UserSession($app);
 		$sUserId = $oUsersSession->getUserId();
 
 		if ($oUsersSession->getUserId() == null) {
@@ -23,7 +23,7 @@ class UserAccountController{
 		return $app['twig']->render('userAccount.twig', array('userAccount' => $accountUser));
 	}
 
-	public function editProfile(){
+	public function editProfile(Request $request,Application $app){
 		$oUsersSession = new Models\UserSession;
 		$sUserId = $oUsersSession->getUserId();
 		
@@ -42,7 +42,8 @@ class UserAccountController{
 			$sUserId
 		];
 
-
+		$oUserModel->editUserAccount($aNewData);
+		// return $app['twig']->render('home.twig');
 
 	}
 }

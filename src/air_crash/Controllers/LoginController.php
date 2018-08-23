@@ -21,13 +21,15 @@ class LoginController
 		if( !empty($request->get('email')) && !empty($request->get('password')))
 		{
             $oUser = new Models\UserModel();
+            
             $aUser = $oUser->signIn(
                 $request->get('email'), 
                 $request->get('password')
             );
 
+
             if($aUser != false) {
-                $oUserSession = new Models\UserSession();
+                $oUserSession = new Models\UserSession($app);
                 $oUserSession->create(
                     $aUser['id'],
                     $aUser['firstname'],

@@ -11,6 +11,8 @@ $app = new Silex\Application();
 // Vous pouvez activer le mode debug comme ceci
 $app['debug'] = true;
 
+$app->register(new Silex\Provider\SessionServiceProvider());
+
 // dirname(__DIR__).'/views/' correspond au dossier de base 
 // ou vous mettrez vos templates
 $app->register(new Silex\Provider\TwigServiceProvider(), array(

@@ -1,13 +1,17 @@
 <?php
 namespace AirCrash\Models;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;
 
 class UserSession
 {
-	public function __construct()
+    private $app;
+
+	public function __construct(Application $app)
 	{
+        $this->app = $app;
 		if(session_status() == PHP_SESSION_NONE)
 		{
 			session_start();
@@ -17,13 +21,13 @@ class UserSession
 	    public function create($userId, $firstName, $lastName, $email)
     {
         // Construction de la session utilisateur.
-        $_SESSION['user'] =
+        $this->app['session']->set('user',
         [
             'UserId'    => $userId,
             'FirstName' => $firstName,
             'LastName'  => $lastName,
             'Email'     => $email
-       ];
+       ]);
     }
     
     
@@ -76,12 +80,8 @@ class UserSession
 
     public function getUserId()
     {
-        if($this->isAuthenticated() == false)
-        {
-            return null;
-        }
-
-        return $_SESSION['user']['UserId'];
+        // null coalescent
+        return $this->app['session']->get('user')['UserId'] ?? null;
     }
 
 	public function isAuthenticated()
